@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!-- {% load static %} -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Combine player statistics</title>
+        
+        <!-- Bootstrap 4 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style type="text/css">
+            .navbar {
+               background-color: #1408A3;
+            }
+            .navbar ul {
+               list-style-type: none;
+               margin: 0px;
+               padding: 0px;
+               text-align: left;
+            }
+            .navbar li {
+               display: inline-block;
+               padding: 25px 0px 25px 0px;
+               width: 125px;
+               text-align: center;
+            }
+            .navbar ul li a {
+               color: white;
+               font-size: 16px;
+            }
+            .navbar h1 {
+               color: white;
+            }
+            .container-fluid {
+                padding-top: 15px;
+                width: 97%;
+            }
+            .container-fluid .row #container1 {
+                text-align: left;
+                outline: 1px solid black;
+                outline-offset: 1px;
+            }
+            .container-fluid .row #container1 h3 {
+                color: red;
+                font-size: 20px;
+            }
+            .container-fluid .row #container1 .form-group {
+                color: black;
+            }
+            .container-fluid .row #container1 .table thead {
+                font-size: 14px;
+            }
+            .container-fluid .row #container1 .table td {
+                font-size: 13px;
+            }
+            .container-fluid .row #container1 #playerSearch {
+                font-size: 13px;
+            }
+            .container-fluid .row #container1 #stats {
+                margin-top: 10px;
+                font-size: 13px;
+            }
+            .container-fluid .row #container2 {
+                text-align: center;
+                outline: 1px solid black;
+                outline-offset: 1px;
+            }
+            .container-fluid .row #container2 h3 {
+                font-size: 20px;
+                color: blue;
+            }
+        </style> 
+    </head>
+    <body>
+        <!-- Webpage header-->
+        <div class="navbar" style="display: inline-block; width: 100%; padding: 0rem 0rem; padding-left: 16px">
+            <div class="row">
+                <div style="float: left; padding-left: 15px; padding-top: 11px">
+                    <a class="navbar-brand" href="#" onclick="window.location.href='/'">
+                        <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70" height="70" class="d-inline-block align-top" alt="" loading="lazy">
+                    </a>
+                </div>
+                <div style="float: right"></div>
+                    <ul>
+                        <li><a href="/PlayerManagement/">Player Management</a></li>
+                        <li><a href="/combinepage/">Combine</a></li>
+                        <li><a href="/passerpage/">Passing</a></li>
+                        <li><a href="/rusherspage/">Rushing</a></li>
+                        <li><a href="/receivingpage/">Receiving</a></li>
+                        <li><a href="/standings/">NFL Team Standings</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h1 style="color:black; padding: 15px">NFL Combine Performance </h1>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-7" id="container1">
+                        <!-- div for player names-->
+                        <div id="playerSearch">
+                            <form method="POST">
+                                <h3>Search for statistics, or add player info and delete player info</h3> 
+                                <label>Player first name:</label>
+                                {{ form.player_first_name }}
+                                <label>Player last name:</label>
+                                {{ form.player_last_name }}
+                                <p>
+                                    <label>Combine Year:</label>
+                                    {{ form.combine_year }}
+                                    <label>Combine Position:</label>
+                                    {{ form.combine_pos }}
+                                    <label>Combine Measurement:</label>
+                                    {{ form.combine_event }}
+                                </p>
+                                <p>
+                                    <label>Statistic</label>
+                                    {{ statistics.statistic }}
+                                    <label>Show N Players</label>
+                                    {{ statistics.num_players }}
+                                </p>
+                                <h6>Enter new combine statistics below</h6>
+                                <p>{{ new_stats }}</p>
+                                <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                                {% if player_exists %}
+                                <input type="submit" class="btn btn-success btn-sm"  disabled="disabled" name="Add Player" value="Add Player">
+                                <input type="submit" class="btn btn-danger btn-sm" name="Delete Player" value="Delete Player">
+                                {% else %}
+                                <input type="submit" class="btn btn-success btn-sm"  name="Add Player" value="Add Player">
+                                <input type="submit" class="btn btn-danger btn-sm" disabled="disabled"  name="Delete Player" value="Delete Player">
+                                {% endif %}
+                                {% csrf_token %} <!--Enable users to enter info on the form-->
+                            </form>
+                        </div>
+                        <div id="stats">
+                            {% if run_time != 0 %}
+                                <p>Running time: <strong>{{ run_time }}</strong> (microsec)</p>
+                            {% endif %}
+                            <p>Average: <b>{{ avg }}</b><br>Standard Deviation: <b>{{ std }}</b><br>Outlier if >= <b>{{ out_high}}</b> or <= <b>{{ out_low }}</b></p>
+                        </div>
+                        <div id="displayTable">
+                            <table class="table table-condensed table-bordered">
+                                <thead>
+                                    <tr>
+                                        {% for key, value in df_dict.items %}
+                                            <th width="1%">{{ key }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                {% for rec in df_rec %}
+                                    <tr>
+                                        {% for i2, k2 in rec.items %}
+                                            <td>{{ k2 }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-5" id="container2">
+                        <h3>Data Visuals</h3>
+                        <div id="scatterplot_fig">
+                            {% autoescape off %}
+                            {{ hist_fig|safe }}
+                            {{ weight_fig|safe }}
+                            {{ height_fig|safe }}
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

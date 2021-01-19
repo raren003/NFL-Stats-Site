@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Team 42 NFL Site</title>
+        <!--Add boostrap styling-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style type="text/css">       
+    .container-fluid {
+        text-align: center;
+        background-color: #e8e4e3;
+        size: 100%;
+    }
+    .container-fluid h1 {
+        font-family: Verdana;
+        text-decoration: underline;
+        padding: 25px;
+        font-weight: bold;
+    }
+    .container-fluid img {
+        padding: 15px;
+    }
+    .navbar {
+        background-color: #1408A3;
+    }
+    .navbar ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+    }
+    .navbar li{
+        display: inline-block;
+        padding: 25px 0px 25px 0px;
+        width: 125px;
+        text-align: center;
+    }
+    .navbar ul li a {
+        color: white;
+        font-size: 16px;
+    }
+</style>
+<body style="background-color:white;">
+<!-- Add bootstrap navbar styling to the page-->
+<div class="navbar">
+    <a class="navbar-brand">
+        <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70" height="70" class="d-inline-block align-top" alt="" loading="lazy">
+    </a>
+    <ul>
+        <li><a href="/PlayerManagement/">Player Management</a></li>
+        <li><a href="/combinepage/">Combine</a></li>
+        <li><a href="/passerpage/">Passing</a></li>
+        <li><a href="/rusherspage/">Rushing</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Receiving <span class="caret"></span></a>
+                <ul class="dropdown-menu" style="background-color: #1408A3; width: 200px">
+                    <li><a href="/receivingpage/" style="float: left">Receiving Statistics</a></li>
+                    <li><a href="/receivingpage/topreceivingpage/" style="float: left">Top Receivers</a></li>
+                    <li><a href="/receivingpage/addreceiverpage/" style="float: left">Add Receiver</a></li>
+                </ul>
+        </li>
+        <li><a href="/standings/">NFL Team Standings</a></li>
+    </ul>
+</div>
+<div>
+    {% if data_exists == false %}
+    <div id='btn'>
+        <label style="color:rgb(255, 0, 0)" for="dwn">Data Does Not Exist</label>
+        <form style="color:rgb(0, 0, 0)" method="get">
+            <input type="submit" class="btn btn-primary" name="Download" value="Download" id='dwn'>
+        </form>
+    </div>
+    {% endif %}
+</div>
+<div class="container-fluid">
+    <h1>Welcome to our NFL Statistics Application!</h1>
+    <img src="/static/images/nfl.jpg" width = "650" height="650">
+</div>
+</html>

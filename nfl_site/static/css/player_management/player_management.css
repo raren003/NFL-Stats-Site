@@ -1,0 +1,56 @@
+/* Define styling for player_management.html */
+
+/* Style the playerNames div */
+#playerNames {
+    margin-left: 15px;
+    margin-bottom: 15px;
+    color: red !important;
+}
+#playerNames form h4 {
+    color: red !important; 
+}
+
+/* Format the player display table */
+#existstag {
+    margin-left: 30px;
+}
+#displayTable table {
+    margin-left: 15px;
+    width: 70%;
+    margin-bottom: 15px;
+}
+
+/* Format the edit buttons */
+#actionButtons {
+    margin-top: 15px;
+}
+
+/* Style for playerAttributes div */
+#playerAttributes {
+    margin-top: 25px;
+    margin-left: 15px;
+}
+#playerAttributes h5 {
+    color: red;
+    font: bold;
+}
+#datetimepicker1 {
+    width: 10%;
+    margin-left: 15px;
+}
+.pos-placeholder::-webkit-input-placeholder {
+    font-size: 12px;
+}
+
+/* Style the save changes area */
+#exportData {
+    margin-left: 15px;
+}
+#exportData form p{
+    margin-top: 25px;
+    margin-bottom:5px;
+    font-size: 12px;
+}
+
+
+

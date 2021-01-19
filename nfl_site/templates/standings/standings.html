@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Standings Site</title>
+         <!-- Bootstrap 4 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> 
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <!-- CSS styling -->
+        <style type="text/css">
+            .navbar {
+                background-color: #1408A3;
+            }
+            .navbar ul {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            text-align: left;
+            }
+            .navbar li{
+                display: inline-block;
+                padding: 25px 0px 25px 0px;
+                width: 125px;
+                text-align: center;
+            }
+            .navbar ul li a {
+                color: white;
+                font-size: 16px;
+            }
+            #leaguetype {
+                padding: 10px 20px;
+                border-radius: 50px;
+            }
+            .container-fluid {
+                width: 97%;
+            }
+            th {
+                background-color: #F0F0F0;
+            }
+            #leagueyear {
+                padding: 10px;
+            }
+            #west {
+                border: solid 1px black;
+                text-align: center;
+                padding: 10;
+            }
+            #east {
+                border: solid 1px black;
+            }
+            #north {
+                border: solid 1px black;
+            }
+            #south {
+                border: solid 1px black;
+            }
+            #leagueTab img {
+                width: 50px;
+            }
+            .col-6 h4 {
+                text-align: center;
+                background-color:  #1408A3;
+                color: white;
+            }
+            #leagueTab {
+                width: 80%;
+                max-width: 95%;
+            }
+            #east h6 {
+                margin: auto;
+                margin-bottom: 10px;
+                text-align: center;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                width: 80% !important;
+                border: solid .5px black;
+                background-color:  #DCDCDC;
+            }
+            #west h6 {
+                margin: auto;
+                margin-bottom: 10px;
+                text-align: center;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                width: 80% !important;
+                border: solid .5px black;
+                background-color:  #DCDCDC;
+            }
+            #south h6 {
+                margin: auto;
+                margin-bottom: 10px;
+                text-align: center;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                width: 80% !important;
+                border: solid .5px black;
+                background-color:  #DCDCDC;
+            }
+            #north h6 {
+                margin: auto;
+                margin-bottom: 10px;
+                text-align: center;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                width: 80% !important;
+                border: solid .5px black;
+                background-color:  #DCDCDC;
+            }
+            #south .table {
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 80% !important;
+                max-width: 80%;
+                border: solid .5px black;
+                padding-top: 10px;
+            }
+            #north .table {
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 80% !important;
+                max-width: 80%;
+                border: solid .5px black;
+                padding-top: 10px;
+            }
+            #east .table {
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 80% !important;
+                max-width: 80%;
+                border: solid .5px black;
+                padding-top: 10px;
+            }
+            #west .table {
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 80% !important;
+                max-width: 80%;
+                border: solid .5px black;
+                padding-top: 10px;
+            }    
+        </style>
+    </head>
+    <body>
+        <!-- Webpage header-->
+        <div class="navbar" style="display: inline-block; width: 100%; padding: 0rem 0rem; padding-left: 16px">
+            <div class="row">
+                <div style="float: left; padding-left: 15px; padding-top: 11px">
+                    <a class="navbar-brand" href="#" onclick="window.location.href='/'">
+                        <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70" height="70" class="d-inline-block align-top" alt="" loading="lazy">
+                    </a>
+                </div>
+                <div style="float: right"></div>
+                    <ul>
+                        <li><a href="/PlayerManagement/">Player Management</a></li>
+                        <li><a href="/combinepage/">Combine</a></li>
+                        <li><a href="/passerpage/">Passing</a></li>
+                        <li><a href="/rusherspage/">Rushing</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Receiving <span class="caret"></span></a>
+                                <ul class="dropdown-menu" style="background-color: #1408A3; width: 200px">
+                                    <li><a href="/receivingpage/" style="float: left">Receiving Statistics</a></li>
+                                    <li><a href="/receivingpage/topreceivingpage/">Top Receivers</a></li>
+                                    <li><a href="/receivingpage/addreceiverpage/">Add Receiver</a></li>
+                                </ul>
+                        </li>
+                        <li><a href="/standings/">NFL Team Standings</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Overarching container holding all our elements-->
+        <div class="container-fluid">
+            <div class="row">
+                <h1 style="color:black; padding: 15px">NFL Standings</h1>
+                <div class="col" style="max-width: 20%">
+                    <!-- Empty column -->
+                </div>
+                <!-- League type selection-->
+                <div class="col">
+                    <div id="leaguetype">
+                        <form method="POST">
+                            <div class="btn-group" role="group" aria-label="" id="actionButtons">
+                                <input type="submit" class="btn btn-outline-primary" name="Division" value="Division">
+                                <input type="submit" class="btn btn-outline-primary" name="Conference" value = "Conference">
+                                <input type="submit" class="btn btn-outline-primary" name="League" value="League">
+                            </div>
+                            {% csrf_token %} <!--Enable users to enter info on the form-->
+                        <form>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- Empty column-->
+                </div>
+            </div><br>
+            <!-- div for league year selection-->
+            <div class="row">
+                <div id="leagueyear">
+                    <form method="POST">
+                        <label>Year</label> 
+                        {{ year_form.year_val }}
+                        <label>Season</label>
+                        {{ year_form.season_val }}
+                        {% csrf_token %} <!--Enable users to enter info on the form-->
+                        <!-- <input type="submit" class="btn btn-primary btn-sm" value="Submit"> -->
+                    </form>
+                </div>
+            </div>
+            <!-- Change the layout based on the button pressed-->
+            {% if league %}
+            <div class="container-fluid" id="league_overview">
+                <table class="table table-condensed table-hover" id="leagueTab">
+                    <thead class="thead-inverse">
+                        <tr>
+                            {% for key, value in df_dict.items %}
+                                <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for rec in df_rec %}
+                        <tr>
+                            {% for i2, k2 in rec.items %}
+                                <td>     {{ k2 }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <script>
+                    var tab = $('#leagueTab tr'); // Grab the leage table
+                    var n = $('#leagueTab >tbody >tr').length; // Find table length so we can loop through
+                    // Loop through the table and set the images
+                    for (var i = 1; i <= n; ++i) {
+                        var str = tab.eq(i).find('td').eq(0).text();
+                        var ele = tab.eq(i).find('td').eq(0);
+                        str = str.trim();
+                        var src1 = "<source media=\"(min-width:1024px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                        var src2 = "<source media=\"(min-width:768px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                        var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                        var img = "<img alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                        if (str === "HST") {
+                            var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                            var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                            var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                            var img_n = img.replace("/logos/","/logos/"+"HOU");
+                            img_n = img.replace("TEMP", "HOU");
+                        }
+                        else if (str === "OAK") {
+                            var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                            var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                            var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                            var img_n = img.replace("/logos/","/logos/"+"LV");
+                            img_n = img.replace("TEMP", "OAK");
+                        }
+                        else if (str === "SL") {
+                            var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                            var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                            var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                            var img_n = "<img alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                        }
+                        else if (str === "SD") {
+                            var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                            var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                            var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                            var img_n = "<img alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                        }
+                        else {
+                            var src1_n = src1.replace("/logos/", "/logos/"+str);
+                            var src2_n = src2.replace("/logos/", "/logos/"+str);
+                            var src3_n = src3.replace("/logos/","/logos/"+str);
+                            var img_n = img.replace("/logos/","/logos/"+str);
+                            img_n = img.replace("TEMP", str);
+                        }
+                        ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                    }    
+                </script>
+            </div>
+            {% elif conference %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6" id="nfc_conf_col">
+                        <h4> NFC </h4>
+                        <table class="table table-condensed table-hover" id="nfc_conf">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in nfc_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in nfc_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <script>
+                            /* NFC Table */
+                            var tab = $('#nfc_conf tr'); // Grab the leage table
+                            var n = $('#nfc_conf >tbody >tr').length; // Find table length so we can loop through
+                            // Loop through the table and set the images
+                            for (var i = 1; i <= n; ++i) {
+                                var str = tab.eq(i).find('td').eq(0).text();
+                                var ele = tab.eq(i).find('td').eq(0);
+                                str = str.trim();
+                                var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                if (str === "HST") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                    var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                    img_n = img.replace("TEMP", "HOU");
+                                }
+                                else if (str === "OAK") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                    var img_n = img.replace("/logos/","/logos/"+"LV");
+                                    img_n = img.replace("TEMP", "OAK");
+                                }
+                                else if (str === "SL") {
+                                    var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                    var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                }
+                                else if (str === "SD") {
+                                    var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                    var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                }
+                                else {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                    var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                    var src3_n = src3.replace("/logos/","/logos/"+str);
+                                    var img_n = img.replace("/logos/","/logos/"+str);
+                                    img_n = img.replace("TEMP", str);
+                                }
+                                ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                                console.log(ele.html());
+                            }
+                        </script>
+                    </div>
+                    <div class="col-6" id="afc_conf_col">
+                        <h4> AFC </h4>
+                        <table class="table table-condensed table-hover" id="afc_conf">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in afc_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in afc_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        /* AFC Table */
+                        var tab = $('#afc_conf tr'); // Grab the leage table
+                        var n = $('#afc_conf >tbody >tr').length; // Find table length so we can loop through
+                        // Loop through the table and set the images
+                        for (var i = 1; i <= n; ++i) {
+                            var str = tab.eq(i).find('td').eq(0).text();
+                            var ele = tab.eq(i).find('td').eq(0);
+                            str = str.trim();
+                            var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            if (str === "HST") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                img_n = img.replace("TEMP", "HOU");
+                            }
+                            else if (str === "OAK") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                var img_n = img.replace("/logos/","/logos/"+"LV");
+                                img_n = img.replace("TEMP", "OAK");
+                            }
+                            else if (str === "SL") {
+                                var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                            }
+                            else if (str === "SD") {
+                                var src1_n = "<source media=\"(min-width:1024px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                var src2_n = "<source media=\"(min-width:768px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                            }
+                            else {
+                                var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                var src3_n = src3.replace("/logos/","/logos/"+str);
+                                var img_n = img.replace("/logos/","/logos/"+str);
+                                img_n = img.replace("TEMP", str);
+                            }
+                            ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                            console.log(ele.html());
+                        }
+                    </script>
+                </div>
+            </div>
+            {% else %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6" id="east">
+                        <h4> East </h4>
+                        <h6 id="nfc_east_head"> NFC </h6>
+                        <table class="table table-condensed table-hover" id="nfc_east">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in nfc_east_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in nfc_east_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <h6 id="afc_east_head"> AFC </h6>
+                        <table class="table table-condensed table-hover" id="afc_east">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in afc_east_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in afc_east_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        $('#east .table tbody').find('tr').each(function() {
+                            var str = $(this).find('td').eq(0).text();
+                            var ele = $(this).find('td').eq(0);
+                            str = str.trim();
+                            var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            if (str === "HST") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                img_n = img.replace("TEMP", "HOU");
+                            }
+                            else if (str === "OAK") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                var img_n = img.replace("/logos/","/logos/"+"LV");
+                                img_n = img.replace("TEMP", "OAK");
+                            }
+                            else if (str === "SL") {
+                                var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                            }
+                            else if (str === "SD") {
+                                var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                            }
+                            else {
+                                var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                var src3_n = src3.replace("/logos/","/logos/"+str);
+                                var img_n = img.replace("/logos/","/logos/"+str);
+                                img_n = img.replace("TEMP", str);
+                            }
+                            ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                        });
+                    </script>
+                    <div class="col-6" id="west">
+                        <h4> West </h4>
+                        <h6> NFC </h6>
+                        <table class="table table-condensed table-hover" id="nfc_west">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in nfc_west_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in nfc_west_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <h6> AFC </h6>
+                        <table class="table table-condensed table-hover" id="afc_west">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in afc_west_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in afc_west_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        $('#west .table tbody').find('tr').each(function() {
+                            var str = $(this).find('td').eq(0).text();
+                            var ele = $(this).find('td').eq(0);
+                            str = str.trim();
+                            var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                            if (str === "HST") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                img_n = img.replace("TEMP", "HOU");
+                            }
+                            else if (str === "OAK") {
+                                var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                var img_n = img.replace("/logos/","/logos/"+"LV");
+                                img_n = img.replace("TEMP", "OAK");
+                            }
+                            else if (str === "SL") {
+                                var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                            }
+                            else if (str === "SD") {
+                                var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                            }
+                            else {
+                                var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                var src3_n = src3.replace("/logos/","/logos/"+str);
+                                var img_n = img.replace("/logos/","/logos/"+str);
+                                img_n = img.replace("TEMP", str);
+                            }
+                            ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                        });
+                    </script>
+                </div>
+                <div class="row">
+                    <div class="col-6" id="north">
+                        <h4> North </h4>
+                        <h6> NFC </h6>
+                        <table class="table table-condensed table-hover" id="nfc_north">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in nfc_north_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in nfc_north_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <h6> AFC </h6>
+                        <table class="table table-condensed table-hover" id="afc_north">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in afc_north_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in afc_north_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <script>
+                            $('#north .table tbody').find('tr').each(function() {
+                                var str = $(this).find('td').eq(0).text();
+                                var ele = $(this).find('td').eq(0);
+                                str = str.trim();
+                                var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                if (str === "HST") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                    var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                    img_n = img.replace("TEMP", "HOU");
+                                }
+                                else if (str === "OAK") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                    var img_n = img.replace("/logos/","/logos/"+"LV");
+                                    img_n = img.replace("TEMP", "OAK");
+                                }
+                                else if (str === "SL") {
+                                    var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                    var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                }
+                                else if (str === "SD") {
+                                    var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                    var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                }
+                                else {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                    var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                    var src3_n = src3.replace("/logos/","/logos/"+str);
+                                    var img_n = img.replace("/logos/","/logos/"+str);
+                                    img_n = img.replace("TEMP", str);
+                                }
+                                ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                            });
+                        </script>    
+                    </div>
+                    <div class="col-6" id="south">
+                        <h4> South </h4>
+                        <h6> NFC </h6>
+                        <table class="table table-condensed table-hover" id="nfc_south">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in nfc_south_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in nfc_south_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <h6> AFC </h6>
+                        <table class="table table-condensed table-hover" id="afc_south">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    {% for key, value in afc_south_dict.items %}
+                                    <th>{{ key }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in afc_south_rec %}
+                                    <tr>
+                                        {% for i, k in rec.items %}
+                                        <td> {{ k }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <script>
+                            $('#south .table tbody').find('tr').each(function() {
+                                var str = $(this).find('td').eq(0).text();
+                                var ele = $(this).find('td').eq(0);
+                                str = str.trim();
+                                var src1 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src2 = "<source media=\"(min-width:30px)\" srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var src3 = "<source srcset=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                var img = "<img width=\"40\" height=\"40\" alt=\"TEMP logo\" class=\"img-fluid\" src=\"https://static.www.nfl.com/t_q-best/league/api/clubs/logos/\">"
+                                if (str === "HST") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"HOU");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"HOU");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"HOU");
+                                    var img_n = img.replace("/logos/","/logos/"+"HOU");
+                                    img_n = img.replace("TEMP", "HOU");
+                                }
+                                else if (str === "OAK") {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+"LV");
+                                    var src2_n = src2.replace("/logos/", "/logos/"+"LV");
+                                    var src3_n = src3.replace("/logos/","/logos/"+"LV");
+                                    var img_n = img.replace("/logos/","/logos/"+"LV");
+                                    img_n = img.replace("TEMP", "OAK");
+                                }
+                                else if (str === "SL") {
+                                    var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">";
+                                    var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var src3_n = "<source srcset=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2b5b.png\">"
+                                }
+                                else if (str === "SD") {
+                                    var src1_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">";
+                                    var src2_n = "<source media=\"(min-width:30px)\" srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var src3_n = "<source srcset=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                    var img_n = "<img width=\"40\" height=\"40\" alt=\"SL logo\" class=\"img-fluid\" src=\"https://sportslogohistory.com/wp-content/uploads/2017/12/los_angeles_chargers_2017-pres.png\">"
+                                }
+                                else {
+                                    var src1_n = src1.replace("/logos/", "/logos/"+str);
+                                    var src2_n = src2.replace("/logos/", "/logos/"+str);
+                                    var src3_n = src3.replace("/logos/","/logos/"+str);
+                                    var img_n = img.replace("/logos/","/logos/"+str);
+                                    img_n = img.replace("TEMP", str);
+                                }
+                                ele.prepend("<picture>"+src1_n+src2_n+src3_n+img_n+"</picture>");
+                            });
+                        </script>    
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Link my standings.js javascript -->
+        <!-- <script src="{%static "js/standings.js" %}"></script> -->
+    </body>
+</html>

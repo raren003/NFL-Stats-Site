@@ -1,0 +1,213 @@
+<html>
+<body>
+
+   <head>
+      <meta charset="utf-8">
+      <title>Rushing Statistics Page</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   </head>
+
+   <style type="text/css">
+      .navbar {
+         background-color: #1408A3;
+      }
+
+      .navbar ul {
+         list-style-type: none;
+         margin: 0px;
+         padding: 0px;
+         text-align: left;
+      }
+
+      .navbar li {
+         display: inline-block;
+         padding: 25px 0px 25px 0px;
+         width: 125px;
+         text-align: center;
+      }
+
+      .navbar ul li a {
+         color: white;
+         font-size: 16px;
+      }
+
+      .navbar h1 {
+         color: white;
+      }
+   </style>
+
+   <div class="navbar">
+      <a class="navbar-brand" href="#" onclick="window.location.href='/'">
+         <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70"
+            height="70" class="d-inline-block align-top" alt="" loading="lazy">
+      </a>
+      <ul>
+         <li><a href="/PlayerManagement/">Player Management</a></li>
+        <li><a href="/combinepage/">Combine</a></li>
+        <li><a href="/passerpage/">Passing</a></li>
+        <li><a href="/rusherspage/">Rushing</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Receiving <span class="caret"></span></a>
+                <ul class="dropdown-menu" style="background-color: #1408A3; width: 200px">
+                    <li><a href="/receivingpage/" style="float: left">Receiving Statistics</a></li>
+                    <li><a href="/receivingpage/topreceivingpage/" style="float: left">Top Receivers</a></li>
+                    <li><a href="/receivingpage/addreceiverpage/" style="float: left">Add Receiver</a></li>
+                </ul>
+        </li>
+        <li><a href="/standings/">NFL Team Standings</a></li>
+      </ul>
+   </div>
+   <h1 style="color:black; padding: 15px">Rushing Statistics</h1>
+   <div id="wrapper" class="row"
+      style=" background-color: hsl(245, 91%, 34%); width: 100%; display: flex; padding: 30px; border: solid blue;">
+
+      <div id="PlayerNames" class="names"
+         style="color:rgb(0, 0, 0);background-color:rgb(255, 255, 255); width: 50%; float: left; flex: 1; padding-left: 15px; padding-top: 1px; border: solid blue;">
+         <form method="Post">
+            <h3>Search Player</h3>
+            <p>
+               {% csrf_token %}
+               {{ form.as_p }}
+            </p>
+
+            <input type="Submit" class="btn btn-primary" name="Search" value="Search" />
+            {% if deletable == True%}
+            <input type="submit" class="btn btn-danger btn-sm" name="Delete Player" value="Delete Player" />
+            {%endif%}
+         </form>
+      </div>
+
+
+      <div id="TeamPicker" class="teams"
+         style="color:rgb(0, 0, 0);background-color:rgb(255, 255, 255);width: 50%; float: right; flex: 1; padding-left: 15px; padding-top: 1px; border: solid blue;">
+         <form method="Post">
+            <h3>Search Top Rushers</h3>
+            <p>
+               {% csrf_token %}
+               {{ team_form.as_p }}
+            </p>
+            <input type="submit" class="btn btn-primary" name="Team Picker" value="Team Picker">
+            <input type="submit" class="btn btn-primary" value="Show Graph" name="Show Graph">
+         </form>
+      </div>
+
+   </div>
+
+   <style>
+
+      table,
+      th,
+      td {
+         border-style: double;
+         border-color: dimgray;
+      }
+
+      th,
+      td {
+         padding: 5px;
+      }
+
+      th {
+         text-align: left;
+      }
+   </style>
+
+   {% if submit_button == "Search" or team_submit == "Team Picker" or show_graph_button == "Show Graph"%}
+
+   {% if exists == 0 %}
+   <h2>Error: {{first_name}} {{last_name}}</h2>
+
+   {% elif exists == 1 and team_name == "all time"%}
+   <h2>Displaying the Top 20 Rushers of All Time!</h2>
+   <div class="row">
+      <div class="container-fluid">
+         <div class="row" style="border:solid blue; padding: .50%;">
+            <div class="col-7" id="container1" style="display:inline-block; vertical-align: top;">
+               <img src="{{team_img}}" alt="team_image" width="200" height="200">
+            </div>
+
+            <div class="col-5" id="container2" style="display:inline-block;">
+               <div>
+                  <h3 style="text-align:justify">Total Rushing Avg Yards: {{total_avg_yards}}</h3>
+               </div>
+               <div>
+                  <h3 style="text-align:justify">Top Rushing Player: {{top_rusher}}</h3>
+               </div>
+               <div>
+                  <h3 style="text-align:justify"> Top Rushing Team Yards: {{top_team}}</h3>
+               </div>
+               <div>
+                  <h3 style="text-align:justify"> Team w/ Most Top Rushers: {{top_rushing_team}}</h3>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% elif exists == 1 and team_name != "all time"%}
+   <h2>Displaying the Top 20 Rushers of the {{team_name }}!</h2>
+   <div class="row">
+      <div class="container-fluid">
+         <div class="row" style="border:solid blue">
+            <div class="col-7" id="container1" style="border:solid red; display:inline-block; vertical-align: top;">
+               <img src="{{team_img}}" alt="team_image" width="200" height="200">
+            </div>
+
+            <div class="col-5" id="container2" style="border:solid green; display:inline-block;">
+               <div>
+                  <h3 style="text-align:justify">Total Rushing Avg Yards: {{total_avg_yards}}</h3>
+               </div>
+               <div>
+                  <h3 style="text-align:justify">Top Rushing Player: {{top_rusher}}</h3>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% else %}
+   <img src="{{player_img}}" alt="player_image">
+   {% endif %}
+
+
+
+   <div id="Table">
+      <table style="width:100%">
+         <tr>
+            {% for item in columns %}
+            <th style="color:darkslategray"><i>{{ item }}</th>
+            </i>
+            {% endfor %}
+         </tr>
+         <tr>
+            {% for key, value in output.items %}
+            <td>
+               {% for i in value %}
+               {{ i }}<br>
+               {% endfor %}
+            </td>
+            {% endfor %}
+         </tr>
+      </table>
+   </div>
+
+   <div>
+      <br>
+      {% if exists == 1%}
+      <h3>Time To Load Page: {{t_time}} sec</h3>
+      {%endif%}
+   </div>
+   {% endif %}
+
+
+
+   {% if show_graph_button == "Show Graph"%}
+   <br>
+   <div class="container" style="width: 85%; padding: 30px;">
+      {{ graph_div|safe }}
+   </div>
+   {% endif %}
+
+</body>
+</html>

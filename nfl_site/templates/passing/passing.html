@@ -1,0 +1,138 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Passing Statistics Page</title>
+        <!--Add boostrap styling-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <style type="text/css">       
+        .container-fluid {
+            text-align: center;
+            background-color: #e8e4e3;
+            size: 100%;
+        }
+        .container-fluid h1 {
+            font-family: Verdana;
+            text-decoration: underline;
+            padding: 25px;
+            font-weight: bold;
+        }
+        .container-fluid img {
+            padding: 15px;
+        }
+        .navbar {
+            background-color: #1408A3;
+        }
+        .navbar ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        text-align: left;
+        }
+        .navbar li{
+            display: inline-block;
+            padding: 25px 0px 25px 0px;
+            width: 125px;
+            text-align: center;
+        }
+        .navbar ul li a {
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+    <body style="background-color:white;">
+    <!-- Add bootstrap navbar styling to the page-->
+    <div class="navbar">
+        <div class="container" style="float: left">
+            <a class="navbar-brand" href="#" onclick="window.location.href='/'">
+                <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70" height="70" class="d-inline-block align-top" alt="" loading="lazy">
+            </a>
+            <ul>
+                <li><a href="/PlayerManagement/">Player Management</a></li>
+                <li><a href="/combinepage/">Combine</a></li>
+                <li><a href="/passerpage/">Passing</a></li>
+                <li><a href="/rusherspage/">Rushing</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Receiving <span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="background-color: #1408A3; width: 200px">
+                            <li><a href="/receivingpage/" style="float: left">Receiving Statistics</a></li>
+                            <li><a href="/receivingpage/topreceivingpage/" style="float: left">Top Receivers</a></li>
+                            <li><a href="/receivingpage/addreceiverpage/" style="float: left">Add Receiver</a></li>
+                        </ul>
+                </li>
+                <li><a href="/standings/">NFL Team Standings</a></li>
+            </ul>
+        </div>
+    </div>
+    <h1 style="color:black; padding: 15px">NFL Passing Statistics</h1>
+    <div class="row" style="width: 100%; display: flex; padding: 30px;">
+        <div class="search" style="color:rgb(0, 0, 0);background-color:rgb(255, 255, 255); width: 50%; float: left; flex: 1; padding: 15px; border-style: solid; border-color: black; border-right-width: 0px;">
+            <form method="POST">
+                <h3>Search</h3>
+                {{form.as_p}}
+                {% csrf_token %} <!--Enable users to enter info on the form-->
+                <input type="submit" class="btn btn-primary" value="Search" name="Search">
+                <input type="submit" class="btn btn-primary" value="Add" name="Add">
+                <input type="submit" class="btn btn-primary" value="Delete" name="Delete">
+                <input type="submit" class="btn btn-primary" value="Delete Player" name="Delete Player">
+            </form>
+        </div>
+        <div class="analytics" style="color:rgb(0, 0, 0);background-color:rgb(255, 255, 255); width: 50%; float:right; flex: 1; padding: 15px; border-style: solid; border-color: black;">
+            <form  method="POST">
+                <h3>Analytics (Top Players by Total Passing Yards)</h3>
+                {{analytics.as_p}}
+                {% csrf_token %} <!--Enable users to enter info on the form-->
+                <input type="submit" class="btn btn-primary" value="Show Table" name="Show Table">
+                <input type="submit" class="btn btn-primary" value="Show Graph" name="Show Graph">
+                <input type="submit" class="btn btn-primary" value="Show Scatter Plot" name="Show Scatter Plot">
+            </form>
+        </div>
+    </div>
+    <h2 style="padding-left: 15px; color:black">{{empty}}</h2>
+    <h2 style="padding-left: 15px; color:black">{{new_entry}}</h2>
+    <h2 style="padding-left: 15px; color:black">{{player_delete}}</h2>
+    {% if graph_div %}
+        <br><div class="container" style="width: 85%; padding: 30px;">
+            {{ graph_div|safe }}
+        </div>
+    {% else %}
+        {% if not results.empty%}
+        <div style="color:rgb(0, 0, 0); padding-left: 15px; padding-right: 15px; padding-top: 15px;"><br>
+            <table id="passing_table" class="table table-bordered" width="100%" cellspacing="0">
+                {% if time %}
+                    <h4 style="color: black">Analytics Calculated in: <strong style="color: red;">{{ time }}</strong> seconds</h4>
+                    {% if previous_time %}
+                        <h4 style="color: black">Previous Time: <strong style="color: red;">{{ previous_time }}</strong> seconds</h4>
+                    {% endif %}
+                    <br>
+                {% endif %}
+                <thead>
+                    <tr>
+                    {% for item in columns %}
+                        <th width="1%" style="color:black"><i><u>{{ item }}</th></u></i>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for key, value in results.items %}
+                        <td style="color:black">
+                            {% for i in value %}
+                                {{ i }}<br>
+                            {% endfor %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <h2 style="padding-left: 15px; color:black">No Passing Data/Entries for Selected Player</h2>
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>

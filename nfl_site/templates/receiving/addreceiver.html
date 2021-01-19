@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Receiver</title>
+        <!--Add boostrap styling-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+
+    <style type="text/css">
+        .navbar {
+            background-color: #1408A3;
+        }
+        .navbar ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        text-align: left;
+        }
+        .navbar li{
+            display: inline-block;
+            padding: 25px 0px 25px 0px;
+            width: 125px;
+            text-align: center;
+        }
+        .navbar ul li a {
+            color: white;
+            font-size: 16px;
+        }
+        .navbar h1{
+            color: white;
+        }
+    </style>
+
+    <div class="navbar">
+        <a class="navbar-brand" href="#" onclick="window.location.href='/'">
+            <img src="https://static.www.nfl.com/image/upload/v1554321393/league/nvfr7ogywskqrfaiu38m.svg" width="70" height="70" class="d-inline-block align-top" alt="" loading="lazy">
+        </a>
+
+        <ul>
+            <li><a href="/PlayerManagement/">Player Management</a></li>
+            <li><a href="/combinepage/">Combine</a></li>
+            <li><a href="/passerpage/">Passing</a></li>
+            <li><a href="/rusherspage/">Rushing</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" >Receiving <span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="background-color: #1408A3; width: 200px">
+                        <li><a href="/receivingpage/" style="float: left">Receiving Statistics</a></li>
+                        <li><a href="/receivingpage/topreceivingpage/" style="float: left">Top Receivers</a></li>
+                        <li><a href="/receivingpage/addreceiverpage/" style="float: left">Add Receiver</a></li>
+                    </ul>
+            </li>
+            <li><a href="/standings/">NFL Team Standings</a></li>
+
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <h1>Add Receiver</h1>
+    </div>
+
+   <div class="container text-center" style="margin: auto; max-width: 900px; padding-top: 30px;">
+        <div class="row" style="width: 100%; display: flex;">
+
+            <div style="width: 50%; float: left; flex: 1;">
+
+                <h3>Add Player</h3>
+
+                <form action="" method="Post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="Submit" class="btn btn-primary" name="Add" value="Add"/>
+                </form>
+
+            </div>
+
+            <div style="width: 50%; float: right; flex: 1;">
+
+                <h3>Delete Player</h3>
+
+                <form method="Post">
+                    {% csrf_token %}
+                    {{ del_player_form.as_p }}
+                    <input type="Submit" class="btn btn-primary" name="Delete" value="Delete"/>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    {% if add_button == "Add" %}
+
+        <div class="container" style="padding-top: 25px">
+            <!--shows add player message -->
+            <h3>{{ message }}</h3>
+        </div>
+
+    {% endif %}
+
+    {% if del_button == "Delete" %}
+
+        <div class="container" style="padding-top: 25px">
+            <!--shows delete player message -->
+            <h3>{{ message }}</h3>
+        </div>
+
+    {% endif %}
+
+    {% if player_dict_loaded == "true" %}
+        <div class="container" style="padding-top: 25px">
+
+            <table class="table table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        {% for item in column_names %}
+                            <th>{{ item }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in player_dict.items %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value.0 }}</td>
+                            <td> {{ value.1 }}</td>
+                            <td> {{ value.2 }}</td>
+                            <td> {{ value.3 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+</body>
+</html>
