@@ -21,8 +21,6 @@ Project requirements/restrictions are as followed:
    1. Database and CSV Parsers are NOT allowed
    2. JSON parsers and visualization libraries are allowed
 3. Any language and platform (mobile/web/desktop for the client) may be used
-    1. **Note:** program built using python 3.6.9
-
 
 ## Demo
 
