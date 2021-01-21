@@ -1,6 +1,9 @@
 # Nfl Stats Site Project
 
-This README primarily focuses on the contributions made by Robert Arenas (myself).
+Website built using the Django framework for analyzing NFL player stats based on data found on the [NFL Play Statistics 
+dataset](https://www.kaggle.com/toddsteussie/nfl-play-statistics-dataset-2004-to-present) found on Kaggle.
+
+This README primarily focuses on the contributions made by myself (Robert Arenas).
 
 ## Table of contents
 
