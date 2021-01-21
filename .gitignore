@@ -3,7 +3,7 @@ nfl_site/nfl_site/__pycache__/
 .DS_Store
 Sprint-1/.DS_Store
 .idea/
-nfl_site/static/archive/**/*.csv
+nfl_site/static/**/*.csv
 nfl_site/response/__pycache__/
 nfl_site/response/migrations/__pycache__/
 nfl_site/combine/__pycache__/
