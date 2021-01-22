@@ -27,7 +27,7 @@ Project requirements/restrictions are as followed:
 
 ## Demo
 
-The following video demonstrates the features implemented by myself on the receiving statics portion of our website.
+The following video demonstrates the features implemented by myself on the receiving statistics portion of our website.
 
 [Video](https://drive.google.com/file/d/12KRO8oBZwXCXaGcKTSQImJ2CXCGJU_5s/view?usp=sharing)
 
