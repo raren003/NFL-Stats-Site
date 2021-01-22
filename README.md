@@ -5,10 +5,12 @@ dataset](https://www.kaggle.com/toddsteussie/nfl-play-statistics-dataset-2004-to
 
 This README primarily focuses on the contributions made by myself (Robert Arenas).
 
-## Table of contents
+## Table of Contents
 
+* [General Info](#general-info)
 * [Demo](#demo)
 * [Technologies Used](#technologies-used)
+* [Setup](#setup)
 
 ## General Info
 
