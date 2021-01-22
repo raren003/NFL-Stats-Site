@@ -7,6 +7,9 @@ This README primarily focuses on the contributions made by myself (Robert Arenas
 
 ## Table of contents
 
+* [Demo](#demo)
+* [Technologies Used](#technologies-used)
+
 ## General Info
 
 Originally created as project for CS180 - Intro to Software Engineering course at University of California Riverside. 
