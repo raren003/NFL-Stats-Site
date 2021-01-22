@@ -25,10 +25,22 @@ format and  provide predefined data analytics, of our choice.
 
 Project requirements/restrictions are as followed:
 1. Dataset must be sufficiently large and contain multiple csv files each containing multiple columns.
-2. Use of 3rd party libraries/frameworks should be limited
+2. Any language and platform (mobile/web/desktop for the client) may be used   
+3. Use of 3rd party libraries/frameworks should be limited
    1. Database and CSV Parsers are NOT allowed
    2. JSON parsers and visualization libraries are allowed
-3. Any language and platform (mobile/web/desktop for the client) may be used
+
+
+Overall the site allows for the viewing of NFL statistics by combine, passing, rushing, receiving, and standings metrics.
+
+My individual contribution to the site was the receiving section of the website. The receiving section allows for the viewing
+and editing of an individual players total receiving yards, average receiving yards per receiving play, and total 
+receiving plays metrics. Additionally, the top n players by average receiving yards per receiving play may be viewed on 
+a scatter plot and table. There is also a section for adding new players or deleting existing players.
+
+My other contribution, in collaboration with teammate Kyle Dean, was creating a custom, built from scratch, csv parser 
+that converts our dataset csv files into python dictionaries. These dictionaries would serve as our in memory datastore 
+for computing our data analytics.
 
 ## Demo
 
