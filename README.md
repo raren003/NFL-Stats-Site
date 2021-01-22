@@ -54,7 +54,7 @@ The following video demonstrates the features implemented by myself on the recei
 ## Setup
 
 1. Clone repository and extract
-2. Ensure the necessary 3rd part python libraries, listed above, are installed on host machine  
+2. Ensure the necessary 3rd party python libraries, listed above, are installed on host machine  
 3. Open the outer nfl_site directory containing manage.py in a terminal
 4. Run program using flowing command:
    ```{python}
