@@ -44,9 +44,9 @@ for computing our data analytics.
 
 ## Demo
 
-The following video demonstrates the features implemented by myself on the receiving statistics portion of our website.
+The following video demonstrates the features implemented by myself on the receiving statistics section of our website.
 
-[Video](https://drive.google.com/file/d/12KRO8oBZwXCXaGcKTSQImJ2CXCGJU_5s/view?usp=sharing)
+[Demo Video](https://drive.google.com/file/d/12KRO8oBZwXCXaGcKTSQImJ2CXCGJU_5s/view?usp=sharing)
 
 ## Technologies Used
 
@@ -63,7 +63,7 @@ The following video demonstrates the features implemented by myself on the recei
          plotly library
    2. [Plotly](https://plotly.com/python/getting-started/)
       1. Used to convert Pandas dataframes into visually appealing graphs
-   3. Other libraries need to run site, but are not used by the receiving portion of the website
+   3. Other libraries need to run site, but are not used by the receiving section of the website
       1. [numpy](https://pypi.org/project/numpy/)
       2. [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
       3. [googledrivedownloader](https://pypi.org/project/googledrivedownloader/)
