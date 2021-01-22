@@ -54,11 +54,15 @@ The following video demonstrates the features implemented by myself on the recei
 ## Setup
 
 1. Clone repository and extract
-2. Open the outer nfl_site directory containing manage.py in a terminal
-3. Run program using flowing command:
+2. Ensure the necessary 3rd part python libraries, listed above, are installed on host machine  
+3. Open the outer nfl_site directory containing manage.py in a terminal
+4. Run program using flowing command:
    ```{python}
    python manage.py runserver
    ```
-    1. **Note:** program built using python 3.8.3
-    
-This will host our web application on your local machine on a local port (default to 8000)
+    1. Program built using **python 3.8.3**
+5. This will host our web application on host machine on a local port (default to 8000)
+
+**NOTE**: If Not prompted or unable to download dataset when first running site perform the following steps.
+1. Download dataset from [here](https://www.kaggle.com/toddsteussie/nfl-play-statistics-dataset-2004-to-present)
+2. Extract all csv files from dataset and place them in the NFL-Stats-Site/nfl_site/static/archive directory.
