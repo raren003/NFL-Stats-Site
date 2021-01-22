@@ -31,10 +31,26 @@ The following video demonstrates the features implemented by myself on the recei
 
 [Video](https://drive.google.com/file/d/12KRO8oBZwXCXaGcKTSQImJ2CXCGJU_5s/view?usp=sharing)
 
-## Technologies used
+## Technologies Used
 
-We are using Django as the general framework for our web application. 
-
+1. Frameworks
+   1. [Django](https://www.djangoproject.com/) - Web framework
+   2. [Boostrap 3.3.7](https://getbootstrap.com/docs/3.3/) - CSS/Javascript framework
+2. Languages
+   1. Python
+   2. HTML/CSS
+   3. Javascript
+3. 3rd party python libraries
+   1. [Pandas](https://pypi.org/project/pandas/)
+      1. Used to convert python dictionaries containing statistical information into Pandas dataframes for use with 
+         plotly library
+   2. [Plotly](https://plotly.com/python/getting-started/)
+      1. Used to convert Pandas dataframes into visually appealing graphs
+   3. Other libraries need to run site, but are not used by the receiving portion of the website
+      1. [numpy](https://pypi.org/project/numpy/)
+      2. [beautifulsoup4](https://pypi.org/project/beautifulsoup4/)
+      3. [googledrivedownloader](https://pypi.org/project/googledrivedownloader/)
+   
 ## Setup
 
 1. Clone repository and extract
